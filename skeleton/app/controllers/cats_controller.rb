@@ -1,4 +1,7 @@
 class CatsController < ApplicationController
+
+  skip_before_action :require_logged_in, only: [:index, :show, :new, :create]
+
   def index
     @cats = Cat.all
     render :index
@@ -25,12 +28,14 @@ class CatsController < ApplicationController
   end
 
   def edit
-    @cat = Cat.find(params[:id])
+    # @cat = Cat.find(params[:id])
+    @cat = current_user.cats.find(params[:id])
     render :edit
   end
 
   def update
-    @cat = Cat.find(params[:id])
+    #@cat = Cat.find(params[:id])
+    @cat = current_user.cats.find(params[:id])
     if @cat.update_attributes(cat_params)
       redirect_to cat_url(@cat)
     else
@@ -42,6 +47,8 @@ class CatsController < ApplicationController
   private
 
   def cat_params
-    params.require(:cat).permit(:age, :birth_date, :color, :description, :name, :sex)
+    params.require(:cat).permit(:age, :birth_date, :color, :description, :name, :sex, :user_id)
   end
+
+
 end

@@ -10,7 +10,9 @@
 
   <body>
     <%= yield %>
-    <% if login? %>
+    <% 
+    
+    if login?  %>
     <h2>
       Welcome, <%= current_user.username%>
     </h2>

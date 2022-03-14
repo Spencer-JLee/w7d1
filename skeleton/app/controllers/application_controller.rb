@@ -17,11 +17,12 @@ class ApplicationController < ActionController::Base
   end
 
   def login?
+    # debugger
     !!current_user
   end
 
   def require_logged_in
-    redirect_to new_session_url unless login?
+    redirect_to cats_url unless login?
   end
 
   def require_logged_out

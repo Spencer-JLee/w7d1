@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
-  before_action :require_logged_out, only: [:new, :create]
-  before_action :require_logged_in, only:[:index, :show]
+  # before_action :require_logged_out, only: [:new, :create]
+  # before_action :require_logged_in, only:[:index, :show]
 
   def index
     @users = User.all
@@ -25,10 +25,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    debugger
+    # debugger
       @user = User.new(user_params)
       if @user.save
-        redirect_to user_url(@user)
+        login(@user)
+        redirect_to cats_url
       else  
         render json: @user.errors.full_messages, status: 422
       end
